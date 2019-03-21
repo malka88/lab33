@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lab3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="320" Width="320">
+    <Grid Background="WhiteSmoke">
+        <Button Content="Создать" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,26,0,0" Click="create_Click"/>
+        <Menu HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="40">
+            <MenuItem x:Name="m" Header="File" Width="40">
+                <MenuItem x:Name="mo" Header="Open" Click="mo_Click"/>
+                <MenuItem x:Name="ms" Header="Save" Click="ms_Click"/>
+            </MenuItem>
+        </Menu>
+        <ListBox x:Name="lb" HorizontalAlignment="Left" Height="134" VerticalAlignment="Top" Width="292" Margin="10,145,0,0"/>
+        <Button x:Name="del" Content="Удалить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="227,26,0,0" Click="del_Click"/>
+        <Button x:Name="red" Content="Редактировать" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="205,105,0,0" Click="del_Click"/>
+        <Grid HorizontalAlignment="Left" Height="109" VerticalAlignment="Top" Width="132" Margin="90,26,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="sl" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="2" Content="" HorizontalContentAlignment="Center"/>
+            <Label x:Name="ml" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1" Content="" HorizontalContentAlignment="Center"/>
+            <Label x:Name="hl" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Content="" HorizontalContentAlignment="Center"/>
+            <Label x:Name="dl" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="3" Content="" HorizontalContentAlignment="Center"/>
+            <CheckBox x:Name="sch" Grid.Column="1" Grid.Row="2" Content="Секунды" Checked="sch_Checked"/>
+            <CheckBox x:Name="mch" Grid.Column="1" Grid.Row="1" Content="Минуты" Checked="mch_Checked"/>
+            <CheckBox x:Name="hch" Grid.Column="1" Grid.Row="0" Content="Часы" Checked="hch_Checked"/>
+            <CheckBox x:Name="dch" Grid.Column="1" Grid.Row="3" Content="Дни" Checked="hch_Checked"/>
+        </Grid>
+
+        </Grid>
 </Window>
