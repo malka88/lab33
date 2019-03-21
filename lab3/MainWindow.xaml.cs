@@ -29,52 +29,72 @@ namespace lab3
             Timer = new System.Windows.Threading.DispatcherTimer();
             Timer.Tick += new EventHandler(dispatcherTimer_Tick);
             Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            if (sch.IsChecked == true)
+            if (lb.SelectedIndex > -1)
             {
                 string str = lb.SelectedValue as string;
-                TimeSpan ts = list[str] - DateTime.Now;
-                sl.Content = ts.Seconds;
-            }
-            else
-            {
-                sl.Content = "";
-            }
 
-            if (mch.IsChecked == true)
-            {
-                string str = lb.SelectedValue as string;
-                TimeSpan ts = list[str] - DateTime.Now;
-                ml.Content = ts.Minutes;
-            }
-            else
-            {
-                ml.Content = "";
-            }
+                if (sch.IsChecked == true)
+                {
 
-            if (hch.IsChecked == true)
-            {
-                string str = lb.SelectedValue as string;
-                TimeSpan ts = list[str] - DateTime.Now;
-                hl.Content = ts.Hours;
-            }
-            else
-            {
-                hl.Content = "";
-            }
+                    TimeSpan ts = list[str] - DateTime.Now;
+                    sl.Content = ts.Seconds;
+                }
+                else
+                {
+                    sl.Content = "";
+                }
 
-            if (dch.IsChecked == true)
-            {
-                string str = lb.SelectedValue as string;
-                TimeSpan ts = list[str] - DateTime.Now;
-                dl.Content = ts.Days;
-            }
-            else
-            {
-                dl.Content = "";
+                if (mch.IsChecked == true)
+                {
+                    //string str = lb.SelectedValue as string;
+                    TimeSpan ts = list[str] - DateTime.Now;
+                    ml.Content = ts.Minutes;
+                }
+                else
+                {
+                    ml.Content = "";
+                }
+
+                if (hch.IsChecked == true)
+                {
+                    //string str = lb.SelectedValue as string;
+                    TimeSpan ts = list[str] - DateTime.Now;
+                    hl.Content = ts.Hours;
+                }
+                else
+                {
+                    hl.Content = "";
+                }
+
+                if (dch.IsChecked == true)
+                {
+                    //string str = lb.SelectedValue as string;
+                    TimeSpan ts = list[str] - DateTime.Now;
+                    dl.Content = ts.Days;
+                }
+                else
+                {
+                    dl.Content = "";
+                }
+
+                foreach (string line in lb.Items)
+                {
+                    TimeSpan ts = list[line] - DateTime.Now;
+                    if((int)ts.TotalSeconds == 0)
+                    {
+                        MessageBox.Show("Таймер " + line + " завершен!");
+                    }
+                }
+                //для каждого таймера в словаре
+                //TimeSpan ts = list[str] - DateTime.Now;
+                //если (int)ts.TotalSeconds == 0 -  выдать сообщение
+
+
             }
         }
 
@@ -140,19 +160,10 @@ namespace lab3
             while ((line = file.ReadLine()) != null)
             {
                 string name = line;
-                lb.Items.Add(line);
-                lb.Items.Add(name);
                 line = file.ReadLine();
                 DateTime dt = DateTime.Parse(line);
-                if(dt < DateTime.Now)
-                {
-                    MessageBox.Show("В файле содержится дата из прошлого!");
-                }
-                else
-                {
-                    lb.Items.Add(name);
-                    list.Add(name, dt);
-                }
+                lb.Items.Add(name);
+                list.Add(name, dt);
             }
 
             file.Close();
@@ -175,6 +186,31 @@ namespace lab3
                     outputFile.WriteLine(line.ToString());
                     DateTime dt = list[line];
                     outputFile.WriteLine(dt.ToString());
+                }
+            }
+        }
+
+        private void del_Click(object sender, RoutedEventArgs e)
+        {
+            string str = lb.SelectedValue as string;
+            list.Remove(str);
+            lb.Items.RemoveAt(lb.SelectedIndex);
+        }
+
+        private void red_Click(object sender, RoutedEventArgs e)
+        {
+            string str = lb.SelectedValue as string;
+            Window1 create_timer = new Window1();
+            if (create_timer.ShowDialog() == true)
+            {
+                date = new DateTime(create_timer.cal.SelectedDate.Value.Year, create_timer.cal.SelectedDate.Value.Month, create_timer.cal.SelectedDate.Value.Day, int.Parse(create_timer.tH.Text), int.Parse(create_timer.tM.Text), int.Parse(create_timer.tS.Text));
+                if (date < DateTime.Now)
+                {
+                    MessageBox.Show("Вы ввели дату из прошлого!");
+                }
+                else
+                {
+                    list[str] = date;
                 }
             }
         }
